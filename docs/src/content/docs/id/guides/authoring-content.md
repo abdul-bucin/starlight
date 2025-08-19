@@ -9,7 +9,7 @@ Pastikan untuk mengecek [dokumentasi MDX](https://mdxjs.com/docs/what-is-mdx/#ma
 
 ## Inline styles
 
-Teks bisa **bold**, _italic_, atau ~~strikethrough~~.
+Teks bisa **tebal**, _italic_, atau ~~strikethrough~~.
 
 ```md
 Teks bisa **bold**, _italic_, atau ~~strikethrough~~.
