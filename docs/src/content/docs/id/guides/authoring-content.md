@@ -7,9 +7,22 @@ Starlight mendukung seluruh variasi sintaks [Markdown](https://daringfireball.ne
 
 Pastikan untuk mengecek [dokumentasi MDX](https://mdxjs.com/docs/what-is-mdx/#markdown) atau [dokumentasi Markdoc](https://markdoc.dev/docs/syntax) jika menggunakan format file tersebut, karena dukungan dan penggunaan Markdown dapat berbeda.
 
+## Frontmatter
+
+Anda dapat menyesuaikan setiap halaman di Starlight dengan mengatur nilai-nilai di frontmatter-nya. Frontmatter diatur di bagian atas berkas Anda di antara pemisah - - - (tanda strip tiga)
+
+```md
+// src/content/docs/example.md
+---
+title: My page title
+---
+Page content follows the second `---`.
+```
+Setiap halaman harus menyertakan setidaknya sebuah `title`. Lihat [referensi frontmatter](https://starlight.astro.build/reference/frontmatter/) untuk semua field yang tersedia dan cara menambahkan field kustom.
+
 ## Inline styles
 
-Teks bisa **tebal**, _italic_, atau ~~strikethrough~~.
+Teks bisa **bold**, _italic_, atau ~~strikethrough~~.
 
 ```md
 Teks bisa **bold**, _italic_, atau ~~strikethrough~~.
@@ -47,7 +60,7 @@ _Relative paths_ juga didukung untuk gambar yang disimpan secara lokal di proyek
 ![Roket di luar angkasa](../../assets/images/rocket.svg)
 ```
 
-## Judul
+## Judul(Heading)
 
 Anda dapat menyusun konten dengan menggunakan judul. Judul dalam Markdown ditandai dengan sejumlah `#` di awal baris.
 
@@ -89,9 +102,9 @@ Saya dapat menautkan ke [kesimpulan saya](#kesimpulan) di bagian bawah halaman y
 
 Judul Level 2 (`<h2>`) dan Level 3 (`<h3>`) akan secara otomatis muncul di daftar isi halaman.
 
-## Asides
+## Kotak sisipan (Aside)
 
-_Asides_ (juga sering disebut sebagai _“admonitions”_ atau “_callouts”_) berguna untuk menampilkan informasi sekunder di samping konten utama halaman.
+Kotak sisipan (dalam bahasa inggris juga sering disebut sebagai _“admonitions”_ atau “_callouts”_) berguna untuk menampilkan informasi sekunder di samping konten utama halaman.
 
 Starlight menyediakan sintaks Markdown kustom untuk merender _asides_. Blok _asides_ ditandai dengan sepasang tiga titik dua `:::` untuk melingkupi konten Anda, dan dapat berjenis `note`, `tip`, `caution`, atau `danger`.
 
@@ -200,9 +213,19 @@ var fun = function lang(l) {
 ```
 ````
 
-```md
-Kode satu baris tunggal yang panjang sebaiknya tidak di-wrap. Kode tersebut harus menggulir secara horizontal jika terlalu panjang. Baris ini sudah cukup panjang untuk mencontohkan hal yang dimaksud.
-```
+## Fitur Expressive Code
+
+Starlight menggunakan [Expressive Code](https://expressive-code.com/) untuk memperluas kemungkinan pemformatan untuk blok kode. Plugin penanda teks dan bingkai jendela dari Expressive Code diaktifkan secara default. Render blok kode dapat dikonfigurasi menggunakan [opsi konfigurasi `expressiveCode`](https://starlight.astro.build/reference/configuration/#expressivecode) milik Starlight.
+
+### Penanda Teks
+
+Anda dapat menyorot baris atau bagian tertentu dari blok kode Anda menggunakan penanda teks Expressive Code di baris pembuka blok kode Anda. Gunakan kurung kurawal ({}) untuk menyorot seluruh baris, dan tanda kutip untuk menyorot string teks.
+
+Ada tiga gaya penyorotan: netral untuk menarik perhatian pada kode, hijau untuk menunjukkan kode yang disisipkan (inserted), dan merah untuk menunjukkan kode yang dihapus (deleted). Baik teks maupun seluruh baris dapat ditandai menggunakan penanda default, atau dalam kombinasi dengan ins= dan del= untuk menghasilkan penyorotan yang diinginkan.
+
+Expressive Code menyediakan beberapa opsi untuk menyesuaikan tampilan visual sampel kode Anda. Banyak di antaranya dapat digabungkan, untuk sampel kode yang sangat ilustratif. Silakan jelajahi dokumentasi Expressive Code untuk opsi ekstensif yang tersedia. Beberapa contoh yang paling umum ditunjukkan di bawah ini:
+
+
 
 ## Fitur Umum Markdown Lainnya
 
