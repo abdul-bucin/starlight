@@ -9,35 +9,38 @@ Pastikan untuk mengecek [dokumentasi MDX](https://mdxjs.com/docs/what-is-mdx/#ma
 
 ## Frontmatter
 
-Anda dapat menyesuaikan setiap halaman di Starlight dengan mengatur nilai-nilai di frontmatter-nya. Frontmatter diatur di bagian atas berkas Anda di antara pemisah - - - (tanda strip tiga)
+Anda dapat menyesuaikan setiap halaman di Starlight dengan mengatur nilai-nilai di frontmatter-nya. 
+Frontmatter diatur di bagian atas berkas Anda di antara pemisah `---` (tanda strip tiga)
 
-```md
-// src/content/docs/example.md
+```md title="src/content/docs/example.md"
 ---
 title: My page title
 ---
+
 Page content follows the second `---`.
 ```
-Setiap halaman harus menyertakan setidaknya sebuah `title`. Lihat [referensi frontmatter](https://starlight.astro.build/reference/frontmatter/) untuk semua field yang tersedia dan cara menambahkan field kustom.
+
+Setiap halaman harus menyertakan setidaknya sebuah `title`. 
+Lihat [referensi frontmatter](/reference/frontmatter/) untuk semua field yang tersedia dan cara menambahkan field kustom.
 
 ## Inline styles
 
-Teks bisa **bold**, _italic_, atau ~~strikethrough~~.
+Teks bisa **tebal**, _miring_, atau ~~coret~~.
 
 ```md
-Teks bisa **bold**, _italic_, atau ~~strikethrough~~.
+Teks bisa **tebal**, _miring_, atau ~~coret~~.
 ```
 
-Anda dapat [menautkan ke halaman lain](/id/getting-started/).
+Anda dapat [menuju ke halaman lain](/getting-started/).
 
 ```md
-Anda dapat [menautkan ke halaman lain](/id/getting-started/).
+Anda dapat [menuju ke halaman lain](/getting-started/).
 ```
 
-Anda dapat menandakan `inline code` dengan _backticks_.
+Anda dapat menandai `kode inline` dengan backticks.
 
 ```md
-Anda dapat menandakan `inline code` dengan _backticks_.
+Anda dapat menandai `kode inline` dengan _backticks_.
 ```
 
 ## Gambar
@@ -60,13 +63,13 @@ _Relative paths_ juga didukung untuk gambar yang disimpan secara lokal di proyek
 ![Roket di luar angkasa](../../assets/images/rocket.svg)
 ```
 
-## Judul(Heading)
+## Heading
 
-Anda dapat menyusun konten dengan menggunakan judul. Judul dalam Markdown ditandai dengan sejumlah `#` di awal baris.
+Anda dapat menyusun konten dengan menggunakan _heading_. _Heading_ dalam Markdown ditandai dengan sejumlah `#` di awal baris.
 
 ### Bagaimana cara menyusun konten halaman di Starlight
 
-Starlight dikonfigurasi untuk secara otomatis menggunakan judul halaman Anda sebagai judul tingkat atas dan akan menyertakan judul "Ringkasan" di bagian atas daftar isi setiap halaman. Kami merekomendasikan memulai setiap halaman dengan konten paragraf biasa dan menggunakan judul di dalam halaman dari `<h2>` ke bawah:
+Starlight dikonfigurasi untuk secara otomatis menggunakan _heading_ halaman Anda sebagai _heading_ tingkat atas dan akan menyertakan _heading_ "Ringkasan" di bagian atas daftar isi setiap halaman. Kami merekomendasikan memulai setiap halaman dengan konten paragraf biasa dan menggunakan _heading_ di dalam halaman dari `<h2>` ke bawah:
 
 ```md
 ---
@@ -78,12 +81,12 @@ Halaman ini menjelaskan cara menggunakan Markdown di Starlight.
 
 ## Inline Styles
 
-## Judul
+## Heading
 ```
 
 ### Automatic heading anchor links
 
-Menggunakan judul dalam Markdown secara otomatis akan memberi Anda _anchor links_ sehingga Anda dapat langsung menautkan ke bagian-bagian tertentu dari halaman Anda:
+Menggunakan _heading_ dalam Markdown secara otomatis akan memberi Anda _anchor links_ sehingga Anda dapat langsung menautkan ke bagian-bagian tertentu dari halaman Anda:
 
 ```md
 ---
@@ -100,17 +103,19 @@ Saya dapat menautkan ke [kesimpulan saya](#kesimpulan) di bagian bawah halaman y
 `https://situs-saya.com/halaman1/#pengantar` langsung menuju ke Pengantar saya.
 ```
 
-Judul Level 2 (`<h2>`) dan Level 3 (`<h3>`) akan secara otomatis muncul di daftar isi halaman.
+Heading Level 2 (`<h2>`) dan Level 3 (`<h3>`) akan secara otomatis muncul di daftar isi halaman.
 
-## Kotak sisipan (Aside)
+Pelajari lebih lanjut tentang bagaimana Astro memproses `id` _heading_ di [Dokumentasi Astro](https://docs.astro.build/en/guides/markdown-content/#heading-ids)
 
-Kotak sisipan (dalam bahasa inggris juga sering disebut sebagai _“admonitions”_ atau “_callouts”_) berguna untuk menampilkan informasi sekunder di samping konten utama halaman.
+## Aside
 
-Starlight menyediakan sintaks Markdown kustom untuk merender _asides_. Blok _asides_ ditandai dengan sepasang tiga titik dua `:::` untuk melingkupi konten Anda, dan dapat berjenis `note`, `tip`, `caution`, atau `danger`.
+_Aside_ (juga sering disebut sebagai _“admonitions”_ atau “_callouts”_) berguna untuk menampilkan informasi sekunder di samping konten utama halaman.
 
-Anda dapat menyusun berbagai jenis konten Markdown lainnya di dalam sebuah _asides_, tetapi _asides_ lebih cocok untuk potongan konten yang pendek dan padat.
+Starlight menyediakan sintaks Markdown kustom untuk merender _aside_. Blok _aside_ ditandai dengan sepasang tiga titik dua `:::` untuk melingkupi konten Anda, dan dapat berjenis `note`, `tip`, `caution`, atau `danger`.
 
-### Catatan Asides
+Anda dapat menyusun berbagai jenis konten Markdown lainnya di dalam sebuah _aside_, tetapi _aside_ lebih cocok untuk potongan konten yang pendek dan padat.
+
+### Aside Note
 
 :::note
 Starlight adalah toolkit website dokumentasi yang dibangun dengan [Astro](https://astro.build/). Anda dapat memulai dengan perintah ini:
@@ -132,9 +137,9 @@ npm create astro@latest -- --template starlight
 :::
 ````
 
-### Judul Asides Kustom
+### Judul Aside Kustom
 
-Anda dapat menentukan judul kustom untuk _asides_ dengan menambahkan tanda kurung siku setelah jenis _asides-nya_, misalnya `:::tip[Apakah Anda tahu?]`.
+Anda dapat menentukan judul kustom untuk _aside_ dengan menambahkan tanda kurung siku setelah jenis _aside-nya_, misalnya `:::tip[Apakah Anda tahu?]`.
 
 :::tip[Apakah Anda tahu?]
 Astro membantu Anda membangun website lebih cepat dengan [“Islands Architecture”](https://docs.astro.build/en/concepts/islands/).
