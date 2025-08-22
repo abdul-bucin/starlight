@@ -1,0 +1,244 @@
+---
+title: Pages
+description: Pelajari cara membuat dan mengelola halaman situs dokumentasi Anda dengan Starlight.
+sidebar:
+  order: 1
+tableOfContents:
+  maxHeadingLevel: 4
+---
+
+Starlight menghasilkan halaman HTML situs Anda berdasarkan konten Anda, dengan opsi fleksibel yang disediakan melalui frontmatter Markdown.  
+Selain itu, proyek Starlight memiliki akses penuh ke [alat pembuatan halaman Astro yang canggih](https://docs.astro.build/en/basics/astro-pages/).
+Panduan ini menunjukkan cara kerja pembuatan halaman di Starlight.
+
+## Halaman konten
+
+### Format File
+
+Starlight mendukung penulisan konten dalam Markdown dan MDX tanpa memerlukan konfigurasi.
+Anda dapat menambahkan dukungan untuk Markdoc dengan mengikuti  [“Markdoc” panduan](/guides/authoring-content/#markdoc).
+
+### Menambah Halaman
+
+Tambahkan halaman baru ke situs Anda dengan membuat berkas `.md` atau `.mdx` di `src/content/docs/`.
+Gunakan subfolder untuk mengatur file Anda dan membuat beberapa segmen jalur.
+
+Misalnya, struktur berkas berikut akan menghasilkan halaman di `example.com/hello-world` dan `example.com/reference/faq`:
+
+import { FileTree } from '@astrojs/starlight/components';
+
+<FileTree>
+
+- src/
+  - content/
+    - docs/
+      - hello-world.md
+      - reference/
+        - faq.md
+
+</FileTree>
+
+### Frontmatter yang typesafe
+
+Semua halaman Starlight berbagi [kumpulan properti frontmatter umum](/reference/frontmatter/)  yang dapat disesuaikan untuk mengontrol tampilan halaman:
+
+```md
+---
+title: Hello, World!
+description: Ini adalah situs web saya yang menggunakan Starlight
+---
+```
+
+Jika Anda melupakan sesuatu yang penting, Starlight akan memberi tahu Anda..
+
+## Halaman kustom
+
+Untuk kasus penggunaan tingkat lanjut, Anda dapat menambahkan halaman kustom dengan membuat direktori `src/pages/`.
+Direktori `src/pages/` menggunakan [perutean berbasis berkas Astro](https://docs.astro.build/en/basics/astro-pages/#file-based-routing) dan menyertakan dukungan untuk berkas `.astro` di antara format halaman lainnya.
+Ini berguna jika Anda perlu membuat halaman dengan tata letak yang sepenuhnya kustom atau menghasilkan halaman dari sumber data alternatif.
+
+Sebagai contoh, proyek ini menggabungkan konten Markdown di `src/content/docs/` dengan _router_ Astro dan HTML di `src/pages`:
+
+<FileTree>
+
+- src/
+  - content/
+    - docs/
+      - hello-world.md
+  - pages/
+    - custom.astro
+    - archived.html
+
+</FileTree>
+
+Baca selengkapnya di panduan [“Pages” di dokumentasi Astro ](https://docs.astro.build/en/basics/astro-pages/).
+
+### Menggunakan desain Starlight di halaman kustom
+
+Untuk menggunakan tata letak Starlight di halaman kustom, bungkus konten halaman Anda dengan komponen  [komponen`<StarlightPage>` ](#komponen-starlightpage).
+Ini bisa berguna jika Anda membuat konten secara dinamis tetapi masih ingin menggunakan desain Starlight.
+Komponen ini harus menjadi impor pertama dalam berkas Anda untuk menyiapkan [lapisan kaskade](/guides/css-and-tailwind/#cascade-layers) dan memastikan urutan CSS yang dapat diprediksi.
+
+To add anchor links to headings that match Starlight’s Markdown anchor link styles, you can use the [`<AnchorHeading>` component](#anchorheading-component) in your custom pages.
+Untuk menambahkan link ke heading yang cocok dengan gaya link Markdown Starlight, Anda dapat menggunakan [komponen `<AnchorHeading>`](#komponen-anchorheading) di halaman kustom Anda.
+
+```astro
+---
+// src/pages/custom-page/example.astro
+// Import the `<StarlightPage>` component first to set up cascade layers.
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+
+// Impor komponen lain yang ingin Anda gunakan di halaman kustom Anda 
+import AnchorHeading from '@astrojs/starlight/components/AnchorHeading.astro';
+import CustomComponent from './CustomComponent.astro';
+---
+
+<StarlightPage frontmatter={{ title: 'Halaman kustom saya' }}>
+	<p>Ini adalah halaman kustom dengan komponen kustom:</p>
+
+	<CustomComponent />
+
+	<AnchorHeading level="2" id="learn-more">Learn more</AnchorHeading>
+	<p>
+		<a href="https://starlight.astro.build/">Baca selengkapnya di dokumentasi  Starlight.
+		</a>
+	</p>
+</StarlightPage>
+```
+
+#### `Komponen <StarlightPage>` 
+
+Komponen `<StarlightPage />` menampilkan halaman konten penuh menggunakan tata letak dan gaya Starlight.
+
+```astro
+---
+ // Impor komponen `<StarlightPage>` terlebih dahulu untuk menyiapkan lapisan kaskade
+
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+
+<StarlightPage frontmatter={{ title: 'Halaman kustomku' }}>
+	<!-- Custom page content -->
+<!-- Konten halaman kustom -->	
+</StarlightPage>
+```
+
+Karena cara kerja [urutan impor](https://docs.astro.build/en/guides/styling/#import-) di Astro, komponen `<StarlightPage>` harus menjadi impor pertama di file Anda untuk menyiapkan lapisan kaskade yang digunakan secara internal oleh Starlight untuk mengelola urutan gayanya.
+
+Komponen `<StarlightPage />` menerima props berikut:
+.
+
+##### `frontmatter`
+
+**required**  
+**type:** `StarlightPageFrontmatter`
+
+Atur [properti frontmatter](/reference/frontmatter/)  untuk halaman ini, mirip dengan frontmatter pada halaman-halaman Markdown.
+Properti [`title`](/reference/frontmatter/#title-required) wajib diisi dan semua properti lainnya bersifat opsional.
+Properti-properti berikut berbeda dari frontmatter Markdown:
+
+- Properti [`slug`](/reference/frontmatter/#slug) tidak didukung dan secara otomatis diatur berdasarkan URL halaman kustom.
+- Opsi [`editUrl`](/reference/frontmatter/#editurl) memerlukan URL untuk menampilkan tautan edit.
+- Properti frontmatter [`sidebar`](/reference/frontmatter/#sidebar) untuk menyesuaikan tampilan halaman dalam [grup tautan yang dibuat secara otomatis](/reference/configuration/#sidebar) tidak tersedia. Halaman yang menggunakan komponen `<StarlightPage />` bukan bagian dari koleksi dan tidak dapat ditambahkan ke grup bilah sisi yang dibuat secara otomatis.
+- Opsi [`draft`](/reference/frontmatter/#draft) hanya menampilkan [pemberitahuan](/reference/overrides/#draftcontentnotice) bahwa halaman tersebut adalah draf, tetapi tidak secara otomatis mengeluarkannya dari _production builds_.
+
+##### `sidebar`
+
+**type:** [`SidebarItem[]`](/reference/configuration/#sidebaritem)  
+**default:** sidebar yang dihasilkan berdasarkan [global `sidebar` config](/reference/configuration/#sidebar)
+
+Provide a custom site navigation sidebar for this page.
+Menyediakan _sidebar_ navigasi situs kustom untuk halaman ini.
+Jika tidak diatur, halaman akan menggunakan _sidebar_ global bawaan.
+Sebagai contoh, halaman berikut menimpa _sidebar_ bawaan dengan tautan ke beranda dan sekelompok tautan ke berbagai halaman kustom lainnya.
+
+```astro {3-13}
+<StarlightPage
+	frontmatter={{ title: 'Orion' }}
+	sidebar={[
+		{ label: 'Home', link: '/' },
+		{
+			label: 'Constellations',
+			items: [
+				{ label: 'Andromeda', link: '/andromeda/' },
+				{ label: 'Orion', link: '/orion/' },
+				{ label: 'Ursa Minor', link: '/ursa-minor/', badge: 'Stub' },
+			],
+		},
+	]}
+>
+	Konten contoh.
+</StarlightPage>
+```
+
+See the [“Sidebar Navigation”](/guides/sidebar/) guide to learn more about the available options for customizing the sidebar.
+Lihat panduan ["Navigasi sidebar"](/guides/sidebar/) untuk mempelajari lebih lanjut tentang opsi yang tersedia untuk menyesuaikan sidebar.
+
+
+##### `hasSidebar`
+
+**type:** `boolean`  
+**default:** `false` jika [`frontmatter.template`](/reference/frontmatter/#template) adalah `'splash'`, selain itu `true`
+
+Kontrol apakah sidebar harus ditampilkan atau tidak di halaman ini.
+.
+
+##### `headings`
+
+**type:** `{ depth: number; slug: string; text: string }[]`  
+**default:** `[]`
+
+Provide an array of all the headings on this page.
+Menyediakan array dari semua heading di halaman ini.
+Jika disediakan Starlight akan membuat daftar isi halaman dari heading yang ada.
+
+##### `dir`
+
+**type:** `'ltr' | 'rtl'`  
+**default:** the writing direction for the current locale
+
+Set the writing direction for this page’s content.
+
+##### `lang`
+
+**type:** `string`  
+**default:** the language of the current locale
+
+Set the BCP-47 language tag for this page’s content, e.g. `en`, `zh-CN`, or `pt-BR`.
+
+##### `isFallback`
+
+**type:** `boolean`  
+**default:** `false`
+
+Indicate if this page is using [fallback content](/guides/i18n/#fallback-content) because there is no translation for the current language.
+
+#### `<AnchorHeading>` component
+
+The `<AnchorHeading />` component renders an HTML heading element with a clickable anchor link that matches Starlight’s Markdown styles.
+
+```astro
+---
+import AnchorHeading from '@astrojs/starlight/components/AnchorHeading.astro';
+---
+
+<AnchorHeading level="2" id="sub-heading">Sub heading</AnchorHeading>
+```
+
+Ini menerima properti berikut ini serta properti lain yang valid [global HTML attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes).
+
+##### `level`
+
+**required**  
+**type:** `1 | 2 | 3 | 4 | 5 | 6`
+
+Tingkat judul yang akan dirender.
+Sebagai contoh, `level="1"` akan menampilkan elemen `<h1>`.
+
+##### `id`
+
+**required**  
+**type:** `string`
+
+ID unik untuk heading ini..
+Ini akan digunakan sebagai atribut `id` dari judul yang ditampilkan dan ikon jangkar akan menautkan ke sana.
